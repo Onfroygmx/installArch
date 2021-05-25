@@ -23,11 +23,11 @@ exec 2> >(tee -a ${log_err} >&2)
 
 function setup {
 
-    printf "$fg[green]Download additional packages and finalize instalation$reset_color\n\n"
+    printf "$fg[cyan]Download additional packages and finalize instalation$reset_color\n\n"
 
     ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
 
-    printf "$fg[yellow]Enable nano-syntax-highlighting for all$reset_color\n\n"
+    printf "$fg[yellow]Enable nano-syntax-highlighting for all$reset_color"
     # Set Default settings nanorc
     echo "" | tee -a /etc/nanorc
     echo "set nowrap" | tee -a /etc/nanorc
@@ -35,13 +35,13 @@ function setup {
     echo "include \"/usr/share/nano-syntax-highlighting/*.nanorc\"" | tee -a /etc/nanorc
     sed -i 's/brightblack/brightblue/g' /usr/share/nano-syntax-highlighting/*.nanorc
 
-    printf "$fg[yellow]Add Shared folder to fstab on boot$reset_color\n\n"
+    printf "\n\n$fg[yellow]Add Shared folder to fstab on boot$reset_color"
     # Add Shared folder to fstab
     echo "" | tee -a /etc/fstab
     echo "# Shared folder virtualbox" | tee -a /etc/fstab
     echo "Shared  /mnt/Shared  vboxsf  uid=1000,gid=1000,rw,dmode=774,fmode=664,noauto,x-systemd.automount  0  0" | tee -a /etc/fstab
 
-    printf "$fg[cyan]Add Build folder, group$reset_color\n\n"
+    printf "\n\n$fg[yellow]Add Build folder, group$reset_color"
     groupadd builders
 
     mkdir -pv /srv/builds
@@ -49,7 +49,7 @@ function setup {
     chmod 770 /srv/builds
     chmod +s /srv/builds
 
-    useradd -m -G wheel,polkitd,builders -s /bin/zsh -c "Main User" onf
+    useradd -m -G wheel,builders -s /bin/zsh -c "Main User" onf
     #useradd -o -u 0 -m -G wheel,builders -s /bin/zsh -c "Main User" onf
 
     printf "$fg[red]Set Password for Onf$reset_color\n\n"
