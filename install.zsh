@@ -28,7 +28,7 @@ log_err=$current_dir/log_err_install.log
 exec 2> >(tee -a ${log_err} >&2)
 
 
-function main {
+function install_arch {
 
     printf "\n$fg[green]Installation of Archlinux will start:$reset_color\n\n\n"
 
@@ -108,5 +108,4 @@ function main {
     cp -r $PWD /mnt/root
 
 }
-
-main "$@"
+install_arch "$@"

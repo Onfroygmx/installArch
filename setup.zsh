@@ -49,15 +49,8 @@ function setup {
     chmod 770 /srv/builds
     chmod +s /srv/builds
 
-    useradd -m -G wheel,builders -s /bin/zsh -c "Main User" onf
-    #useradd -o -u 0 -m -G wheel,builders -s /bin/zsh -c "Main User" onf
-
-    printf "$fg[red]Set Password for Onf$reset_color\n\n"
-    passwd onf
-
-
     reflector -c FR,DE -a 12 -p http,https --sort rate  --download-timeout 10 --save /etc/pacman.d/mirrorlist
-    pacman -Sy - < additionalpkg.txt
+    pacman -Sy - < $pck_install
 
     printf "$fg[cyan]Update keys, create mandb and locatedb$reset_color\n\n"
     pacman-key --init && pacman-key --populate
@@ -67,6 +60,11 @@ function setup {
 
     printf "\n$fg[green]Finished Setup:$reset_color\n\n\n"
 
-}
+    useradd -m -G wheel,builders -s /bin/zsh -c "Main User" onf
+    #useradd -o -u 0 -m -G wheel,builders -s /bin/zsh -c "Main User" onf
 
+    printf "$fg[red]Set Password for Onf$reset_color\n\n"
+    passwd onf
+
+}
 setup "$@"
