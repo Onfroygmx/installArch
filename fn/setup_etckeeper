@@ -7,7 +7,7 @@
 
 function setup_etckeeper {
 
-    arch-chroot /mnt  git config --global user.name "root"
+    arch-chroot /mnt  git config --global user.name "onf_root"
     arch-chroot /mnt  git config --global user.email "onfroy@gmx.com"
     arch-chroot /mnt  git config --global core.editor "nano -w"
     arch-chroot /mnt  git config --global init.defaultBranch main
