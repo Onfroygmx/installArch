@@ -9,7 +9,7 @@ function prepare_pacman {
     sed -i 's/^#TotalDownload/TotalDownload/g' /etc/pacman.conf
     sed -i 's/^#VerbosePkgLists/VerbosePkgLists/g' /etc/pacman.conf
 
-    if (( # == 0 )); then
+    # if (( # == 0 )); then
         printf "$fg[yellow]Read Package list: $1$reset_color\n\n"
 
         while read -r line
@@ -17,7 +17,7 @@ function prepare_pacman {
         done < $1
 
         printf "$fg[yellow]Extra packages to instal:\n $pck $reset_color\n\n"
-    fi
+    # fi
 
 }
 prepare_pacman "$@"
