@@ -7,6 +7,13 @@
 
 function setup_config {
 
+    # Global Env variables
+    echo "" | tee -a /etc/security/pam_env.conf
+    echo "XDG_CONFIG_HOME DEFAULT=@{HOME}/.config" | tee -a /etc/security/pam_env.conf
+    echo "XDG_DATA_HOME DEFAULT=@{HOME}/.local/share" | tee -a /etc/security/pam_env.conf
+    echo "XDG_CACHE_HOME DEFAULT=@{HOME}/.cache" | tee -a /etc/security/pam_env.conf
+    echo "XDG_STATE_HOME DEFAULT=@{HOME}/.local/state" | tee -a /etc/security/pam_env.conf
+
     ### Activate defalut SSH key host to RSA
     sed -i "s|#HostKey /mnt/etc/ssh/ssh_host_rsa_key|HostKey /mnt/etc/ssh/ssh_host_rsa_key|g" /mnt/etc/ssh/sshd_config
 
