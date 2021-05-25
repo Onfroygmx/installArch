@@ -35,7 +35,7 @@ function main {
 
     printf "\n$fg[green]Installation of Archlinux will start:$reset_color\n\n\n"
 
-    partion_delete /dev/sda
+    partition_delete /dev/sda
     partition_drive /dev/sda
     ## Call external function for formating
     partition_format /dev/sda1 fat

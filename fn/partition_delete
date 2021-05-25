@@ -6,9 +6,9 @@
 #
 
 ## Delete previous partitions if exist
-function partion_delete {
+function partition_delete {
     wipefs -a $1
     ## Clean partion table
     sgdisk $1 -Zo
 }
-partion_delete "$@"
+partition_delete "$@"
