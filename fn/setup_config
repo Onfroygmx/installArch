@@ -1,0 +1,33 @@
+#!/bin/zsh
+#autoload
+# Setup Env variables
+# Authors:
+#   JB
+#
+
+function setup_config {
+
+    ### Activate defalut SSH key host to RSA
+    sed -i "s|#HostKey /mnt/etc/ssh/ssh_host_rsa_key|HostKey /mnt/etc/ssh/ssh_host_rsa_key|g" /mnt/etc/ssh/sshd_config
+
+    ### Activate persistence and max size for journalctl
+    sed -i "s/#Storage=auto/Storage=persistent/g" /mnt/etc/systemd/journald.conf
+    sed -i "s/#SystemMaxUse=/SystemMaxUse=100M/g" /mnt/etc/systemd/journald.conf
+
+    ### Set values for makepkg
+    sed -i 's/-march=x86-64 -mtune=generic/-march=native/g' /mnt/etc/makepkg.conf
+    sed -i 's/^#RUSTFLAGS="-C opt-level=2"/RUSTFLAGS="-C opt-level=2 -C target-cpu=native"/g' /mnt/etc/makepkg.conf
+    sed -i 's/^#BUILDDIR/BUILDDIR/g' /mnt/etc/makepkg.conf
+
+    # Add Shared folder to fstab
+    echo "# Shared folder virtualbox" | tee -a /mnt/etc/fstab
+    echo "Shared  /mnt/Shared  vboxsf  uid=1000,gid=1000,rw,dmode=774,fmode=664,noauto,x-systemd.automount  0  0" | tee -a /mnt/etc/fstab
+
+    # Allow wheel group to sudo
+    echo "## Allow members of group wheel to execute any command" | tee /mnt/etc/sudoers.d/wheel
+    echo "%wheel ALL=(ALL) ALL" | tee -a /mnt/etc/sudoers.d/wheel
+
+    printf "$fg[cyan]Environment Configuration done$reset_color\n\n"
+
+}
+setupEnv "$@"

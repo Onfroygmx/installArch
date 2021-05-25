@@ -1,0 +1,26 @@
+#!/bin/zsh
+#autoload
+# Setup Bootloader
+# Authors:
+#   JB
+#
+
+function setup_systemd_bootloader {
+
+    ## Generate all in error mode
+    arch-chroot /mnt bootctl install 2>&1
+
+    echo "title Arch Server" | tee /mnt/boot/loader/entries/ArchServer.conf
+    echo "linux /vmlinuz-linux" | tee -a /mnt/boot/loader/entries/ArchServer.conf
+    echo "initrd /intel-ucode.img" | tee -a /mnt/boot/loader/entries/ArchServer.conf
+    echo "initrd /initramfs-linux.img" | tee -a /mnt/boot/loader/entries/ArchServer.conf
+    echo "options root=PARTUUID=$(blkid -s PARTUUID -o value /dev/sda3) rw" | tee -a /mnt/boot/loader/entries/ArchServer.conf
+
+    echo "default  ArchServer.conf" | tee -a /mnt/boot/loader/loader.conf
+    echo "timeout  4" | tee -a /mnt/boot/loader/loader.conf
+    echo "console-mode max" | tee -a /mnt/boot/loader/loader.conf
+    echo "editor   no" | tee -a /mnt/boot/loader/loader.conf
+
+    printf "$fg[cyan]Bootloader configured$reset_color\n\n"
+}
+setup_systemd_bootloader "@$"

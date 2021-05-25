@@ -1,0 +1,14 @@
+#!/bin/zsh
+#autoload
+# Create partitions during install process
+# Authors:
+#   JB
+#
+
+function partition_drive {
+    ## Create 3 partitions and last one takes the rest (root)
+    sgdisk -n 0:0:+512MiB -t 0:ef00 -c 0:boot /dev/sda
+    sgdisk -n 0:0:+1536MiB -t 0:8300 -c 0:home /dev/sda
+    sgdisk -n 0:0:-0 -t 0:8300 -c 0:root /dev/sda
+}
+partition_drive "$@"

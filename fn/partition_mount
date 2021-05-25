@@ -1,0 +1,15 @@
+#!/bin/zsh
+#autoload
+# Mount partitions during install process
+# Authors:
+#   JB
+#
+
+function partition_mount {
+    mount /dev/sda3 /mnt
+    mkdir /mnt/boot
+    mkdir /mnt/home
+    mount /dev/sda1 /mnt/boot
+    mount /dev/sda2 /mnt/home
+}
+partition_mount "$@"

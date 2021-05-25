@@ -1,0 +1,14 @@
+#!/bin/zsh
+#autoload
+# Delete partitions during install process
+# Authors:
+#   JB
+#
+
+## Delete previous partitions if exist
+function partion_delete {
+    wipefs -a $1
+    ## Clean partion table
+    sgdisk $1 -Zo
+}
+partion_delete "$@"
