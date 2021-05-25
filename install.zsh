@@ -76,7 +76,6 @@ function main {
 
 
     setup_network
-    arch-chroot /mnt ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
     arch-chroot /mnt hostnamectl set-hostname arch
     arch-chroot /mnt hostnamectl status
     arch-chroot /mnt etckeeper commit "Configure Network files"
@@ -107,7 +106,9 @@ function main {
     arch-chroot /mnt systemctl enable systemd-timesyncd 2>&1
     arch-chroot /mnt etckeeper commit "Enable services and set root PWD"
 
-    printf "$fg[green]Base Configuration, unmount and reboot$reset_color\n\n"
+    printf "$fg[green]Base Configuration finished, unmount and reboot$reset_color\n\n"
+
+    cp -r $PWD /mnt/root
 
 }
 
