@@ -13,7 +13,7 @@ namcap
 nano-syntax-highlighting
 p7zip
 pacman-contrib
-pacutils<
+pacutils
 svn
 tree
 unzip

@@ -27,21 +27,7 @@ function setup {
 
     ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
 
-    printf "$fg[yellow]Enable nano-syntax-highlighting for all$reset_color"
-    # Set Default settings nanorc
-    echo "" | tee -a /etc/nanorc
-    echo "set nowrap" | tee -a /etc/nanorc
-    echo "include \"/usr/share/nano/default.nanorc\"" | tee -a /etc/nanorc
-    echo "include \"/usr/share/nano-syntax-highlighting/*.nanorc\"" | tee -a /etc/nanorc
-    sed -i 's/brightblack/brightblue/g' /usr/share/nano-syntax-highlighting/*.nanorc
-
-    printf "\n\n$fg[yellow]Add Shared folder to fstab on boot$reset_color"
-    # Add Shared folder to fstab
-    echo "" | tee -a /etc/fstab
-    echo "# Shared folder virtualbox" | tee -a /etc/fstab
-    echo "Shared  /mnt/Shared  vboxsf  uid=1000,gid=1000,rw,dmode=774,fmode=664,noauto,x-systemd.automount  0  0" | tee -a /etc/fstab
-
-    printf "\n\n$fg[yellow]Add Build folder, group$reset_color"
+    printf "\n\n$fg[yellow]Add Build folder, group$reset_color\n"
     groupadd builders
 
     mkdir -pv /srv/builds
@@ -49,8 +35,9 @@ function setup {
     chmod 770 /srv/builds
     chmod +s /srv/builds
 
-    reflector -c FR,DE -a 12 -p http,https --sort rate  --download-timeout 10 --save /etc/pacman.d/mirrorlist
-    pacman -Sy - < $pck_install
+    reflector -c FR,DE -a 1 -p http,https --sort rate --fastest 10 --download-timeout 20 --save /etc/pacman.d/mirrorlist
+    # reflector -c FR,DE -a 12 -p http,https --sort rate --latest 10 --download-timeout 10 --save /etc/pacman.d/mirrorlist
+    pacman -Sy --noconfirm - < $pck_install
 
     printf "$fg[cyan]Update keys, create mandb and locatedb$reset_color\n\n"
     pacman-key --init && pacman-key --populate
@@ -65,6 +52,19 @@ function setup {
 
     printf "$fg[red]Set Password for Onf$reset_color\n\n"
     passwd onf
+
+    printf "$fg[yellow]Enable nano-syntax-highlighting for all$reset_color"
+    # Set Default settings nanorc
+    echo "" | tee -a /etc/nanorc
+    echo "set nowrap" | tee -a /etc/nanorc
+    echo "include \"/usr/share/nano/default.nanorc\"" | tee -a /etc/nanorc
+    echo "include \"/usr/share/nano-syntax-highlighting/*.nanorc\"" | tee -a /etc/nanorc
+    sed -i 's/brightblack/brightblue/g' /usr/share/nano-syntax-highlighting/*.nanorc
+
+    printf "\n\n$fg[yellow]Add Shared folder to fstab on boot$reset_color"
+    # Add Shared folder to fstab
+    echo "# Shared folder virtualbox" | tee -a /etc/fstab
+    echo "Shared  /mnt/Shared  vboxsf  uid=1000,gid=1000,rw,dmode=774,fmode=664,noauto,x-systemd.automount  0  0" | tee -a /etc/fstab
 
 }
 setup "$@"
