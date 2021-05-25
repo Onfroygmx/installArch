@@ -29,9 +29,6 @@ exec 2> >(tee -a ${log_err} >&2)
 
 
 function main {
-    export LANGUAGE=en_US.UTF-8
-    export LANG=en_US.UTF-8
-    export LC_ALL=en_US.UTF-8
 
     printf "\n$fg[green]Installation of Archlinux will start:$reset_color\n\n\n"
 
