@@ -10,11 +10,11 @@ lsof
 man-db
 mlocate
 namcap
-nano-syntax-highlighting
 p7zip
 pacman-contrib
 pacutils
 svn
+time
 tree
 unzip
 vim

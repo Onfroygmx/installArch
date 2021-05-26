@@ -30,6 +30,14 @@ function setup_config {
     echo "# Shared folder virtualbox" | tee -a /mnt/etc/fstab
     echo "Shared  /mnt/Shared  vboxsf  uid=1000,gid=1000,rw,dmode=774,fmode=664,noauto,x-systemd.automount  0  0" | tee -a /mnt/etc/fstab
 
+    # Set Default settings nanorc
+    echo "" | tee -a /etc/nanorc
+    echo "set nowrap" | tee -a /mnt/etc/nanorc
+    echo "include \"/usr/share/nano/default.nanorc\"" | tee -a /mnt/etc/nanorc
+    echo "include \"/usr/share/nano-syntax-highlighting/*.nanorc\"" | tee -a /mnt/etc/nanorc
+    sed -i 's/brightblack/brightblue/g' /mnt/usr/share/nano-syntax-highlighting/*.nanorc
+
+
     # Allow wheel group to sudo
     echo "## Allow members of group wheel to execute any command" | tee /mnt/etc/sudoers.d/wheel
     echo "%wheel ALL=(ALL) ALL" | tee -a /mnt/etc/sudoers.d/wheel

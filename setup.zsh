@@ -51,19 +51,6 @@ function setup {
     sudo mandb -c
     sudo updatedb
 
-    printf "$fg[yellow]Enable nano-syntax-highlighting for all$reset_color"
-    # Set Default settings nanorc
-    echo "" | tee -a /etc/nanorc
-    echo "set nowrap" | tee -a /etc/nanorc
-    echo "include \"/usr/share/nano/default.nanorc\"" | tee -a /etc/nanorc
-    echo "include \"/usr/share/nano-syntax-highlighting/*.nanorc\"" | tee -a /etc/nanorc
-    sed -i 's/brightblack/brightblue/g' /usr/share/nano-syntax-highlighting/*.nanorc
-
-    printf "\n\n$fg[yellow]Add Shared folder to fstab on boot$reset_color"
-    # Add Shared folder to fstab
-    echo "# Shared folder virtualbox" | tee -a /etc/fstab
-    echo "Shared  /mnt/Shared  vboxsf  uid=1000,gid=1000,rw,dmode=774,fmode=664,noauto,x-systemd.automount  0  0" | tee -a /etc/fstab
-
     printf "\n$fg[green]Finished Setup:$reset_color\n\n\n"
 
 }

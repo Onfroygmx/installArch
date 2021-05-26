@@ -5,6 +5,7 @@ git
 inetutils
 intel-ucode
 nano
+nano-syntax-highlighting
 openssh
 reflector
 sudo
