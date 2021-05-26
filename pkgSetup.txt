@@ -3,6 +3,7 @@ bash-completion
 colordiff
 expac
 htop
+lesspipe
 links
 linux-headers
 lsb-release
