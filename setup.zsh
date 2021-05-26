@@ -27,15 +27,21 @@ function setup {
 
     ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
 
-    printf "\n\n$fg[yellow]Add Build folder, group$reset_color\n"
+    printf "\n\n$fg[yellow]Add Build folder, group, user$reset_color\n"
     groupadd builders
+
+    useradd -m -G wheel,builders -s /bin/zsh -c "Main User" onf
+    #useradd -o -u 0 -m -G wheel,builders -s /bin/zsh -c "Main User" onf
+
+    printf "$fg[red]Set Password for Onf$reset_color\n\n"
+    passwd onf
 
     mkdir -pv /srv/builds
     chgrp builders /srv/builds
     chmod 770 /srv/builds
     chmod +s /srv/builds
 
-    reflector -c FR,DE -a 1 -p http,https --sort rate --fastest 10 --download-timeout 20 --save /etc/pacman.d/mirrorlist
+    reflector -c FR,DE -a 1 -p http,https --sort rate --fastest 10 --download-timeout 10 --save /etc/pacman.d/mirrorlist
     # reflector -c FR,DE -a 12 -p http,https --sort rate --latest 10 --download-timeout 10 --save /etc/pacman.d/mirrorlist
     pacman -Sy --noconfirm - < $pck_install
 
@@ -44,14 +50,6 @@ function setup {
     sudo pacman-key --refresh-keys
     sudo mandb -c
     sudo updatedb
-
-    printf "\n$fg[green]Finished Setup:$reset_color\n\n\n"
-
-    useradd -m -G wheel,builders -s /bin/zsh -c "Main User" onf
-    #useradd -o -u 0 -m -G wheel,builders -s /bin/zsh -c "Main User" onf
-
-    printf "$fg[red]Set Password for Onf$reset_color\n\n"
-    passwd onf
 
     printf "$fg[yellow]Enable nano-syntax-highlighting for all$reset_color"
     # Set Default settings nanorc
@@ -65,6 +63,8 @@ function setup {
     # Add Shared folder to fstab
     echo "# Shared folder virtualbox" | tee -a /etc/fstab
     echo "Shared  /mnt/Shared  vboxsf  uid=1000,gid=1000,rw,dmode=774,fmode=664,noauto,x-systemd.automount  0  0" | tee -a /etc/fstab
+
+    printf "\n$fg[green]Finished Setup:$reset_color\n\n\n"
 
 }
 setup "$@"
