@@ -80,7 +80,7 @@ function install_arch {
     setup_systemd_bootloader
 
     user_root
-    arch-chroot /mnt etckeeper commit "Configure Network files"
+    arch-chroot /mnt etckeeper commit "Configure Boot loader and root user"
 
     ### Copy pacman configs to new setup
     cp /etc/pacman.conf /mnt/etc/
