@@ -41,13 +41,13 @@ function setup {
     chmod 770 /srv/builds
     chmod +s /srv/builds
 
-    reflector -c FR,DE -a 1 -p http,https --sort rate --fastest 10 --download-timeout 10 --save /etc/pacman.d/mirrorlist
+#    reflector -c FR,DE -a 1 -p http,https --sort rate --fastest 10 --download-timeout 10 --save /etc/pacman.d/mirrorlist
     # reflector -c FR,DE -a 12 -p http,https --sort rate --latest 10 --download-timeout 10 --save /etc/pacman.d/mirrorlist
     pacman -Sy --noconfirm - < $pck_install
 
     printf "$fg[cyan]Update keys, create mandb and locatedb$reset_color\n\n"
     pacman-key --init && pacman-key --populate
-    sudo pacman-key --refresh-keys
+ #   sudo pacman-key --refresh-keys
     sudo mandb -c
     sudo updatedb
 
