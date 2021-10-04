@@ -1,0 +1,12 @@
+efibootmgr
+efivar
+etckeeper
+git
+inetutils
+intel-ucode
+nano
+nano-syntax-highlighting
+openssh
+sudo
+virtualbox-guest-utils
+zsh
