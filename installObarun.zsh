@@ -68,7 +68,7 @@ function install_arch {
     arch-chroot /mnt 66-enable -t boot boot@system
     arch-chroot /mnt 66-env -t boot -r 'HOSTNAME=!obarun' boot@system
     arch-chroot /mnt 66-env -t boot -r 'KEYMAP=!be-latin1' boot@system
-    arch-chroot /mnt 66-env -t boot -r 'TZ=Europe' boot@system
+    arch-chroot /mnt 66-env -t boot -r 'TZ=Europe/Paris' boot@system
     arch-chroot /mnt 66-enable -t boot -F boot@system
 
     # Setup Net tree
@@ -79,7 +79,8 @@ function install_arch {
     arch-chroot /mnt ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
     #arch-chroot /mnt timedatectl set-timezone Europe/Paris
     #arch-chroot /mnt timedatectl set-ntp true
-    #arch-chroot /mnt hwclock --systohc --utc
+    arch-chroot /mnt hwclock --systohc --utc
+    arch-chroot /mnt hwclock --verbose
     #arch-chroot /mnt timedatectl status
     arch-chroot /mnt etckeeper commit "Configure Date/Time and synchronization"
 
