@@ -30,7 +30,7 @@ exec 2> >(tee -a ${log_err} >&2)
 
 function install_arch {
 
-    printf "\n$fg[green]Installation of Archlinux will start:$reset_color\n\n\n"
+    printf "\n$fg[green]Installation of Obarun/Arch will start:$reset_color\n\n\n"
 
     partition_delete /dev/sda
     partition_drive /dev/sda
@@ -63,11 +63,23 @@ function install_arch {
     arch-chroot /mnt locale
     arch-chroot /mnt etckeeper commit "Configure locale and keyboard"
 
+    # Setup boot tree
+    arch-chroot /mnt 66-tree -n boot
+    arch-chroot /mnt 66-enable -t boot boot@system
+    arch-chroot /mnt 66-env -t boot -r 'HOSTNAME=!obarun' boot@system
+    arch-chroot /mnt 66-env -t boot -r 'KEYMAP=!be-latin1' boot@system
+    arch-chroot /mnt 66-env -t boot -r 'TZ=Europe' boot@system
+    arch-chroot /mnt 66-enable -t boot -F boot@system
+
+    # Setup Net tree
+    arch-chroot /mnt 66-tree -nE net
+    arch-chroot /mnt 66-enable -t net dhcpcd
+    arch-chroot /mnt 66-enable -t net sshd
     # Setup timedate
     arch-chroot /mnt ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
     #arch-chroot /mnt timedatectl set-timezone Europe/Paris
     #arch-chroot /mnt timedatectl set-ntp true
-    arch-chroot /mnt hwclock --systohc --utc
+    #arch-chroot /mnt hwclock --systohc --utc
     #arch-chroot /mnt timedatectl status
     arch-chroot /mnt etckeeper commit "Configure Date/Time and synchronization"
 
@@ -75,9 +87,10 @@ function install_arch {
     setup_network "obarun"
     #arch-chroot /mnt hostnamectl set-hostname arch
     #arch-chroot /mnt hostnamectl status
-    rch-chroot /mnt hostname
+    arch-chroot /mnt hostname
     arch-chroot /mnt etckeeper commit "Configure Network files"
 
+    mkdir -p /mnt/boot/loader/entries
     setup_systemd_bootloader
 
     user_root
@@ -97,12 +110,12 @@ function install_arch {
     arch-chroot /mnt etckeeper commit "Configure other base functionalities"
 
     ### Enable Service for startup
-    arch-chroot /mnt systemctl enable sshd 2>&1
-    arch-chroot /mnt systemctl enable systemd-networkd 2>&1
-    arch-chroot /mnt systemctl enable systemd-networkd-wait-online 2>&1
-    arch-chroot /mnt systemctl enable systemd-resolved 2>&1
-    arch-chroot /mnt systemctl enable systemd-timesyncd 2>&1
-    arch-chroot /mnt etckeeper commit "Enable services and set root PWD"
+    #arch-chroot /mnt systemctl enable sshd 2>&1
+    #arch-chroot /mnt systemctl enable systemd-networkd 2>&1
+    #arch-chroot /mnt systemctl enable systemd-networkd-wait-online 2>&1
+    #arch-chroot /mnt systemctl enable systemd-resolved 2>&1
+    #arch-chroot /mnt systemctl enable systemd-timesyncd 2>&1
+    #arch-chroot /mnt etckeeper commit "Enable services and set root PWD"
 
     printf "$fg[green]Base Configuration finished, unmount and reboot$reset_color\n\n"
 

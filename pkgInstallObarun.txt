@@ -8,5 +8,6 @@ nano
 nano-syntax-highlighting
 openssh
 sudo
+sshd-66serv
 virtualbox-guest-utils
 zsh
