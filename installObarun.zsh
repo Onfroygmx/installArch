@@ -60,21 +60,22 @@ function install_arch {
 
     setup_locale
     arch-chroot /mnt locale-gen
-    arch-chroot /mnt localectl status
+    arch-chroot /mnt locale
     arch-chroot /mnt etckeeper commit "Configure locale and keyboard"
 
     # Setup timedate
     arch-chroot /mnt ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
-    arch-chroot /mnt timedatectl set-timezone Europe/Paris
-    arch-chroot /mnt timedatectl set-ntp true
+    #arch-chroot /mnt timedatectl set-timezone Europe/Paris
+    #arch-chroot /mnt timedatectl set-ntp true
     arch-chroot /mnt hwclock --systohc --utc
-    arch-chroot /mnt timedatectl status
+    #arch-chroot /mnt timedatectl status
     arch-chroot /mnt etckeeper commit "Configure Date/Time and synchronization"
 
 
-    setup_network
-    arch-chroot /mnt hostnamectl set-hostname arch
-    arch-chroot /mnt hostnamectl status
+    setup_network "obarun"
+    #arch-chroot /mnt hostnamectl set-hostname arch
+    #arch-chroot /mnt hostnamectl status
+    rch-chroot /mnt hostname
     arch-chroot /mnt etckeeper commit "Configure Network files"
 
     setup_systemd_bootloader

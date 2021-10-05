@@ -72,7 +72,7 @@ function install_arch {
     arch-chroot /mnt etckeeper commit "Configure Date/Time and synchronization"
 
 
-    setup_network
+    setup_network "arch"
     arch-chroot /mnt hostnamectl set-hostname arch
     arch-chroot /mnt hostnamectl status
     arch-chroot /mnt etckeeper commit "Configure Network files"

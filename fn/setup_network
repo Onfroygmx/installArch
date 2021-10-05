@@ -15,12 +15,12 @@ function setup_network {
     sed -i 's/^#DNSSEC=no/DNSSEC=yes/g' /mnt/etc/systemd/resolved.conf
     sed -i 's/^#DNSOverTLS=no/DNSOverTLS=yes/g' /mnt/etc/systemd/resolved.conf
 
-    echo arch > /mnt/etc/hostname
+    echo $1 > /mnt/etc/hostname
 
     echo "# The following lines are desirable for IPv4 capable hosts" | tee -a /mnt/etc/hosts
     echo "127.0.0.1       localhost" | tee -a /mnt/etc/hosts
     echo "# 127.0.1.1 is often used for the FQDN of the machine" | tee -a /mnt/etc/hosts
-    echo "127.0.1.1       arch.devserver.net arch" | tee -a /mnt/etc/hosts
+    echo "127.0.1.1       $1.devserver.net arch" | tee -a /mnt/etc/hosts
     echo "# The following lines are desirable for IPv6 capable hosts" | tee -a /mnt/etc/hosts
     echo "::1             localhost ip6-localhost ip6-loopback" | tee -a /mnt/etc/hosts
     echo "ff02::1         ip6-allnodes" | tee -a /mnt/etc/hosts
