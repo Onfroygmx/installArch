@@ -9,5 +9,6 @@ nano-syntax-highlighting
 openssh
 sudo
 sshd-66serv
+dhcpcd-66serv
 virtualbox-guest-utils
 zsh
