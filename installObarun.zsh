@@ -50,7 +50,7 @@ function install_arch {
     prepare_pacman $pck_install
 
     printf "$fg[cyan]Pacstrap Installation$reset_color\n\n"
-    pacstrap /mnt base linux linux-firmware - < $pck_install
+    pacstrap -C pacman.conf.obarun /mnt base linux linux-firmware - < $pck_install
 
     genfstab -t PARTUUID -p /mnt >> /mnt/etc/fstab
 
