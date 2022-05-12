@@ -92,14 +92,15 @@ function install_arch {
     arch-chroot /mnt etckeeper commit "Configure Network files"
 
     mkdir -p /mnt/boot/loader/entries
-    setup_systemd_bootloader
+
+    setup_obarun
 
     user_root
     arch-chroot /mnt etckeeper commit "Configure Boot loader and root user"
 
     ### Copy pacman configs to new setup
-    cp /etc/pacman.conf /mnt/etc/
-    cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
+    #cp /etc/pacman.conf /mnt/etc/
+    #cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
 
     ### Configuration files for network
     cp conf/etc/systemd/network/10-* /mnt/etc/systemd/network/

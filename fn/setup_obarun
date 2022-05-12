@@ -1,0 +1,28 @@
+#!/bin/zsh
+#autoload
+# Setup Obarun
+# Authors:
+#   JB
+#
+
+function setup_systemd_obarun {
+
+    ## Generate all in error mode
+    bootctl --path=/mnt/boot install 2>&1
+
+    echo "title Obarun Server" | tee /mnt/boot/loader/entries/ObaServer.conf
+    echo "linux /vmlinuz-linux" | tee -a /mnt/boot/loader/entries/ObaServer.conf
+    echo "initrd /intel-ucode.img" | tee -a /mnt/boot/loader/entries/ObaServer.conf
+    echo "initrd /initramfs-linux.img" | tee -a /mnt/boot/loader/entries/ObaServer.conf
+    echo "options root=PARTUUID=$(blkid -s PARTUUID -o value /dev/sda3) rw" | tee -a /mnt/boot/loader/entries/ObaServer.conf
+
+    echo "default  ArchServer.conf" | tee -a /mnt/boot/loader/loader.conf
+    echo "timeout  4" | tee -a /mnt/boot/loader/loader.conf
+    echo "console-mode max" | tee -a /mnt/boot/loader/loader.conf
+    echo "editor   no" | tee -a /mnt/boot/loader/loader.conf
+
+    echo "nameserver 8.8.8.8" | tee /mnt/etc/resolv.conf.tail
+
+    printf "$fg[cyan]Bootloader configured$reset_color\n\n"
+}
+setup_systemd_obarun "@$"
