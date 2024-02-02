@@ -20,6 +20,8 @@ HoldPkg     = pacman glibc
 #CleanMethod = KeepInstalled
 #UseDelta    = 0.7
 Architecture = auto
+ParallelDownloads = 5
+
 
 # Pacman won't upgrade packages listed in IgnorePkg and members of IgnoreGroup
 IgnorePkg   = systemd
@@ -27,7 +29,7 @@ IgnorePkg   = systemd-libs
 #IgnoreGroup =
 
 #NoUpgrade   =
-NoExtract   = /usr/lib/libsystemd*.*
+NoExtract   = /usr/lib/libsystemd*.* /usr/lib/systemd* /etc/systemd*
 # Misc options
 #UseSyslog
 Color
@@ -71,24 +73,24 @@ LocalFileSigLevel = Optional
 
 #[obcore-testing]
 #SigLevel = Required
-#Server = https://repo.obarun.org/obcore-testing/
+#Server = https://cloud.server.obarun.org/$repo/os/$arch/
 
 [obcore]
-Server = https://repo.obarun.org/obcore
+Server = https://cloud.server.obarun.org/$repo/os/$arch/
 
 #[obextra-testing]
 #SigLevel = Required
-#Server = https://repo.obarun.org/obextra-testing
+#Server = https://cloud.server.obarun.org/$repo/os/$arch/
 
 [obextra]
-Server = https://repo.obarun.org/obextra
+Server = https://cloud.server.obarun.org/$repo/os/$arch/
 
 #[obcommunity-testing]
 #SigLevel = Required
 #Server = https://repo.obarun.org/obcommunity-testing
 
-[obcommunity]
-Server = https://repo.obarun.org/obcommunity
+#[obcommunity]
+#Server = https://repo.obarun.org/obcommunity
 
 #[obmultilib-testing]
 #SigLevel = Required
@@ -100,10 +102,11 @@ Server = https://repo.obarun.org/obcommunity
 
 #[observice-testing]
 #SigLevel = Required
-#Server = https://repo.obarun.org/observice-testing
+#Server = https://cloud.server.obarun.org/$repo/os/$arch/
 
 [observice]
-Server = https://repo.obarun.org/observice
+Server = https://cloud.server.obarun.org/$repo/os/$arch/
+
 
 #[testing]
 #Include = /etc/pacman.d/mirrorlist
@@ -117,8 +120,8 @@ Include = /etc/pacman.d/mirrorlist
 #[community-testing]
 #Include = /etc/pacman.d/mirrorlist
 
-[community]
-Include = /etc/pacman.d/mirrorlist
+#[community]
+#Include = /etc/pacman.d/mirrorlist
 
 # If you want to run 32 bit applications on your x86_64 system,
 # enable the multilib repositories as required here.
